@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f4ef">
+    <meta name="description" content="Build, preview, and manage a portfolio in three distinct designs.">
+    <title>Folio Foundry | Portfolio studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Folio Foundry home"><span class="brand-mark">f.</span><span>folio<span class="brand-light">foundry</span></span></a>
+      <div class="topbar-right">
+        <span class="save-state" id="save-state">All changes saved</span>
+        <span class="mode-indicator" id="mode-indicator"><span class="status-dot"></span><span id="mode-label">On this device</span></span>
+        <button class="button button-quiet" id="settings-open" type="button"><span aria-hidden="true">⚙</span> Settings</button>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <aside class="rail" aria-label="Portfolio library">
+        <div class="rail-heading"><div><span class="eyebrow">YOUR WORKSPACE</span><h1>Portfolios</h1></div><button class="icon-button" id="new-portfolio" type="button" aria-label="Create new portfolio" title="New portfolio">+</button></div>
+        <div class="portfolio-list" id="portfolio-list"></div>
+        <div class="rail-bottom"><div class="rail-note"><span class="note-mark">✳</span><div><strong>Made to be yours.</strong><p>One story, three ways to tell it.</p></div></div><div class="rail-foot">FOLIO FOUNDRY <span>·</span> PORTFOLIO STUDIO</div></div>
+      </aside>
+
+      <section class="editor" aria-label="Portfolio editor">
+        <div class="editor-heading"><div><span class="eyebrow">PORTFOLIO BUILDER</span><h2 id="editor-title">New portfolio</h2></div><div class="editor-actions"><button class="button button-danger" id="delete-portfolio" type="button" hidden>Delete</button><button class="button button-primary" id="save-portfolio" type="button"><span aria-hidden="true">↥</span> Save portfolio</button></div></div>
+        <form id="portfolio-form" autocomplete="on">
+          <section class="form-section identity-section">
+            <div class="section-heading"><span class="section-number">01</span><div><h3>The essentials</h3><p>Start with the details people remember.</p></div></div>
+            <div class="photo-row"><label class="photo-picker" for="profile-picture"><img id="photo-preview" alt="Profile picture preview" hidden><span id="photo-placeholder" aria-hidden="true">+</span></label><div><label class="field-label" for="profile-picture">Profile picture</label><input class="file-input" id="profile-picture" type="file" accept="image/*"><label class="file-hint" for="profile-picture">Choose an image <span>· JPEG, PNG, or WebP</span></label></div></div>
+            <div class="field-grid">
+              <label class="field"><span class="field-label">Full name <i>*</i></span><input name="fullName" required maxlength="100" placeholder="e.g. Jordan Lee"></label>
+              <label class="field"><span class="field-label">Professional title</span><input name="headline" maxlength="120" placeholder="e.g. Product designer"></label>
+              <label class="field"><span class="field-label">Email</span><input name="email" type="email" maxlength="160" placeholder="jordan@example.com"></label>
+              <label class="field"><span class="field-label">Contact number</span><input name="phone" type="tel" maxlength="50" placeholder="+1 555 010 2040"></label>
+              <label class="field field-wide"><span class="field-label">Address / location</span><input name="address" maxlength="160" placeholder="Portland, Oregon"></label>
+              <label class="field field-wide"><span class="field-label">About me</span><textarea name="about" rows="4" maxlength="1600" placeholder="A short introduction, what you care about, and how you work."></textarea></label>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <div class="section-heading"><span class="section-number">02</span><div><h3>Your experience</h3><p>One entry per line. Separate details with a vertical bar.</p></div></div>
+            <div class="field-grid">
+              <label class="field field-wide"><span class="field-label">Education</span><textarea name="education" rows="3" placeholder="BFA, Visual Communication | State University | 2022"></textarea><span class="field-hint">Qualification | School | Year</span></label>
+              <label class="field field-wide"><span class="field-label">Work experience</span><textarea name="experience" rows="3" placeholder="Product Designer | Fieldwork Studio | 2022–Present | Building useful things for real people."></textarea><span class="field-hint">Role | Organization | Dates | Description</span></label>
+              <label class="field field-wide"><span class="field-label">Skills</span><input name="skills" maxlength="500" placeholder="Research, Figma, prototyping, writing"></label>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <div class="section-heading"><span class="section-number">03</span><div><h3>Selected work</h3><p>Give your best projects a little room.</p></div></div>
+            <div class="field-grid">
+              <label class="field field-wide"><span class="field-label">Projects</span><textarea name="projects" rows="4" placeholder="Open Atlas | A community mapping platform | https://example.com"></textarea><span class="field-hint">Project | Description | Link</span></label>
+              <label class="field field-wide"><span class="field-label">Social media &amp; website links</span><textarea name="links" rows="3" placeholder="Website | https://example.com&#10;LinkedIn | https://linkedin.com/in/yourname"></textarea><span class="field-hint">Name | Full URL</span></label>
+            </div>
+          </section>
+        </form>
+      </section>
+
+      <section class="preview-column" aria-label="Portfolio preview">
+        <div class="preview-toolbar"><div><span class="eyebrow">LIVE PREVIEW</span><h2>Your portfolio</h2></div><button class="icon-button preview-expand" id="preview-expand" type="button" title="Open preview in a new tab" aria-label="Open preview in a new tab">↗</button></div>
+        <div class="template-picker" role="group" aria-label="Choose a portfolio template">
+          <button class="template-option is-selected" type="button" data-template="simple" aria-pressed="true"><span class="template-swatch swatch-simple"><i></i><i></i><i></i></span><span><strong>Simple</strong><small>Quietly confident</small></span><span class="template-check" aria-hidden="true">✓</span></button>
+          <button class="template-option" type="button" data-template="modern" aria-pressed="false"><span class="template-swatch swatch-modern"><i></i><i></i><i></i></span><span><strong>Modern</strong><small>Bold &amp; structured</small></span><span class="template-check" aria-hidden="true">✓</span></button>
+          <button class="template-option" type="button" data-template="creative" aria-pressed="false"><span class="template-swatch swatch-creative"><i></i><i></i><i></i></span><span><strong>Creative</strong><small>Make a statement</small></span><span class="template-check" aria-hidden="true">✓</span></button>
+        </div>
+        <div class="preview-frame"><div class="preview-browser"><span></span><span></span><span></span><div>PORTFOLIO PREVIEW</div></div><div id="preview" class="portfolio-preview template-simple"></div></div>
+        <p class="preview-caption"><span class="preview-caption-dot"></span> Preview updates as you write</p>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <dialog class="settings-dialog" id="settings-dialog" aria-labelledby="settings-title">
+      <form method="dialog"><button class="dialog-close" aria-label="Close settings">×</button></form>
+      <span class="eyebrow">STORAGE &amp; ACCOUNT</span><h2 id="settings-title">Your workspace</h2>
+      <p class="dialog-intro">Choose where your portfolios live. This device works immediately; connect Supabase for secure, online storage.</p>
+      <div class="storage-tabs" role="group" aria-label="Storage type"><button class="storage-tab is-active" id="local-tab" type="button">This device</button><button class="storage-tab" id="cloud-tab" type="button">Online database</button></div>
+      <section id="local-settings" class="settings-panel"><div class="storage-summary"><span class="storage-icon">⌂</span><div><strong>Saved in this browser</strong><p>Your portfolios stay on this device in this browser.</p></div></div><button class="button button-primary button-full" id="use-local" type="button">Use this device</button></section>
+      <section id="cloud-settings" class="settings-panel" hidden>
+        <p class="setup-note">Connect a Supabase project to save private portfolios online. Create the table with <code>supabase/schema.sql</code> before connecting.</p>
+        <label class="field"><span class="field-label">Project URL</span><input id="supabase-url" type="url" placeholder="https://your-project.supabase.co" autocomplete="url"></label>
+        <label class="field"><span class="field-label">Publishable / anon key</span><input id="supabase-key" type="password" placeholder="sb_publishable_..." autocomplete="off"></label>
+        <div class="auth-fields"><label class="field"><span class="field-label">Email</span><input id="auth-email" type="email" autocomplete="email" placeholder="you@example.com"></label><label class="field"><span class="field-label">Password</span><input id="auth-password" type="password" autocomplete="current-password" placeholder="At least 8 characters"></label></div>
+        <div class="auth-actions"><button class="button button-primary" id="sign-in" type="button">Sign in</button><button class="button button-secondary" id="sign-up" type="button">Create account</button></div>
+        <button class="text-button" id="sign-out" type="button" hidden>Sign out</button>
+        <p class="security-note">Your project key is stored only in this browser. Row-level security keeps each account's portfolios private.</p>
+      </section>
+    </dialog>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

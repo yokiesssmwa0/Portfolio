@@ -1,22 +1,25 @@
 # Folio Foundry
 
-A responsive portfolio builder with exactly three live-preview designs: Simple, Modern, and Creative. Create, edit, retrieve, and delete portfolios in browser storage, or connect a Supabase project for authenticated online storage.
+A responsive portfolio generator with exactly three designs: Simple, Modern, and Creative. Users can create an account, enter portfolio information, save and retrieve private drafts, select a template, preview the result, and edit or delete drafts.
 
 ## Run locally
 
-Open `index.html` in a browser, or serve this folder with any static web server. Local mode works without an account and saves portfolios in the current browser.
+```sh
+cd my-portfolio
+npm ci
+npm run dev
+```
 
-## Enable online storage
+The local demo can be entered without a database, but it stores drafts only in the current browser. For cloud accounts and online persistence, configure Supabase below.
+
+## Configure Supabase
 
 1. Create a Supabase project and open its SQL Editor.
-2. Run [`supabase/schema.sql`](supabase/schema.sql) to create the portfolio table and owner-only row-level security policies.
-3. In the app, open **Settings → Online database**. Enter the project's URL and publishable (or legacy anon) key, then create an account or sign in.
-4. Use the same project URL and key on another device to retrieve the account's portfolios.
+2. Run [`supabase/schema.sql`](supabase/schema.sql). It creates the portfolio table and row-level security policies so only the signed-in owner can access their rows.
+3. In Folio Foundry, expand **Connect an online database** and enter the project URL and publishable (anon) key. These values are saved in that browser; each user signs in with their own Supabase account.
 
-The public browser key is intended for client-side use. Never use a Supabase `service_role` key in this site. Row-level security limits access to each authenticated account. Profile images are resized in the browser and stored with portfolio data.
+Never enter a Supabase `service_role` key in the website. Profile images are resized in the browser and stored with the portfolio data.
 
 ## Publish
 
-GitHub Actions deploys the static app to GitHub Pages on every push to `main`. The workflow requires the repository's Pages source to use **GitHub Actions**. For this repository the expected URL is:
-
-`https://yokiesssmwa0.github.io/Portfolio/`
+The GitHub Actions workflow builds `my-portfolio` and deploys its `dist` directory to GitHub Pages on pushes to `main`. The repository's Pages source must be set to **GitHub Actions**. The expected URL is `https://yokiesssmwa0.github.io/Portfolio/`.

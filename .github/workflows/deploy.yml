@@ -23,6 +23,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: my-portfolio/package-lock.json
+      - name: Install app dependencies
+        run: npm ci
+        working-directory: my-portfolio
+      - name: Build portfolio studio
+        run: npm run build
+        working-directory: my-portfolio
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
@@ -30,10 +42,7 @@ jobs:
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: |
-            index.html
-            styles.css
-            app.js
+          path: my-portfolio/dist
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
